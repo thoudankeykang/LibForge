@@ -131,21 +131,49 @@ SHORTNAMES
         .Where(x => x is DataArray dx ? dx.Array(1).Children.Count > 0 : false)
         .Last() as DataArray)
         .Array(1).Children.Last() as DataAtom).Int;
-      var crowdChannel = array.Array("song").Array("crowd_channels")?.Int(1);
-      if (crowdChannel != null)
+      // MT: get all crowd channels in a more consistent way
+      List<int> crowdChannels = new List<int>();
+      var crowdData = array.Array("song").Array("crowd_channels");
+      if (crowdData != null)
       {
-        if (crowdChannel == lastTrack + 2)
-          trackSubArray.AddNode(DTX.FromDtaString($"fake ({lastTrack + 1})"));
-        else if (crowdChannel == lastTrack + 3)
-          trackSubArray.AddNode(DTX.FromDtaString($"fake ({lastTrack + 1} {lastTrack + 2})"));
-        trackSubArray.AddNode(DTX.FromDtaString($"crowd ({crowdChannel} {crowdChannel + 1})"));
+        int i = 0;
+        while (true)
+        {
+          int? maybeChannel = crowdData.Int(i);
+          if (maybeChannel == null)
+            break;
+          else
+            crowdChannels.Add(maybeChannel.Value);
+          i++;
+        }
       }
-      else
+      // MT: any other channel not in an instrument or crowd should be under 'fake'
+      List<int> fakeChannels = new List<int>();
+      for (int i = lastTrack + 1; i < totalTracks; i++)
       {
-        if (totalTracks == lastTrack + 2)
-          trackSubArray.AddNode(DTX.FromDtaString($"fake ({lastTrack + 1})"));
-        else if (totalTracks == lastTrack + 3)
-          trackSubArray.AddNode(DTX.FromDtaString($"fake ({lastTrack + 1} {lastTrack + 2})"));
+        if (!crowdChannels.Contains(i))
+        {
+          fakeChannels.Add(i);
+        }
+      }
+      // MT: finally add the fake and crowd parts to the dta, if they aren't empty
+      if (fakeChannels.Count != 0)
+      {
+        string fakeString = "fake ";
+        foreach (var channel in fakeChannels)
+        {
+          fakeString += $" {channel}";
+        }
+        trackSubArray.AddNode(DTX.FromDtaString(fakeString));
+      }
+      if (crowdChannels.Count != 0)
+      {
+        string crowdString = "crowd ";
+        foreach (var channel in crowdChannels)
+        {
+          crowdString += $" {channel}";
+        }
+        trackSubArray.AddNode(DTX.FromDtaString(crowdString));
       }
       moggDta.AddNode(trackArray);
       moggDta.AddNode(array.Array("song").Array("pans"));
