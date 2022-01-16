@@ -1,20 +1,26 @@
-# About This Repository
+This is a fork of LibForge/ForgeTool by Maxton, with minor fixes contributed by Onyxite.
+
+Download from the [releases page](https://github.com/mtolly/LibForge/releases).
+
+# Original readme follows
+
+## About This Repository
 
 I am keeping track of my research into RB4 customs here.
 
 I am working out the structure of the files in Rock Band 4. These are being documented in the form of 010 Editor Template files, which are in the `010` directory.
 
-# Latest Build
+## Latest Build
 
 Can be downloaded at [Appveyor](https://ci.appveyor.com/project/maxton/libforge/branch/master/artifacts)
 
-# LibForge
+## LibForge
 
 This is a library I'm working on that handles reading, writing, and converting for formats in the Forge engine used by Rock Band 4 and Rock Band VR.
 
 It is licensed under the GNU LGPLv3 and includes two frontends at the moment:
 
-## ForgeTool
+### ForgeTool
 
 This is a command line tool that does file conversions.
 
@@ -47,7 +53,7 @@ Verbs:
    - converts an uncompressed milo archive to forge lipsync file
 ```
 
-## ForgeToolGUI
+### ForgeToolGUI
 
 This has an ark/PFS/folder browser with support for previewing the following:
   - Textures (.png_pc, .png_ps4, .bmp_pc, .bmp_ps4, etc)
