@@ -427,7 +427,7 @@ namespace LibForge.Midi
             return false;
           }
 
-          if (diff == 3 && rolls.Count > 0 && rolls[rolls.Count - 1].EndTick > e.StartTicks)
+          if (diff == 3 && rolls.Count > 0 && rolls[rolls.Count - 1].EndTick > e.StartTicks && lane != 0 /* MT: don't emit kick lanes */)
           {
             var tmp = rolls[rolls.Count - 1];
             tmp.Lanes |= 1 << lane;
