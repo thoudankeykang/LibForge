@@ -491,6 +491,12 @@ namespace ForgeTool
       Console.WriteLine("       --scee : make an EU package");
       Console.WriteLine("       --id <16CHARIDENTIFIER> : set the customizable part of the Package ID/Filename");
       Console.WriteLine("       --desc \"Package Description\" : set the description of the package");
+      Console.WriteLine("  con2rbvr <input_con> <output_dir>");
+      Console.WriteLine("   - converts a CON custom to a RBVR custom in the given game directory");
+      Console.WriteLine("  arkorder <input_hdr> <output_dta>");
+      Console.WriteLine("   - outputs the arkorder DTA of a given ARK HDR file");
+      Console.WriteLine("  arkbuild <input_dir> <input_arkorder> <output_dir> <ark_name>");
+      Console.WriteLine("   - creates an ARK file using files with the specified arkorder in the output directory");
       Console.WriteLine("  milo2lipsync <input.milo_xbox> <output.lipsync>");
       Console.WriteLine("   - converts an uncompressed milo archive to forge lipsync file");
       Console.WriteLine("  csv2txt <input.csv_pc> <output.csv>");
