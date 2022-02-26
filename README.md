@@ -1,4 +1,4 @@
-This is a fork of LibForge/ForgeTool by Maxton, with minor fixes contributed by Onyxite.
+This is a fork of LibForge/ForgeTool by Maxton, with continuing work to fix bugs and add features.
 
 Download from the [releases page](https://github.com/mtolly/LibForge/releases).
 
@@ -49,8 +49,16 @@ Verbs:
        --scee : make an EU package
        --id <16CHARIDENTIFIER> : set the customizable part of the Package ID/Filename
        --desc "Package Description" : set the description of the package
+  con2rbvr <input_con> <output_dir>
+   - converts a CON custom to a RBVR custom in the given game directory
+  arkorder <input_hdr> <output_dta>
+   - outputs the arkorder DTA of a given ARK HDR file
+  arkbuild <input_dir> <input_arkorder> <output_dir> <ark_name>
+   - creates an ARK file using files with the specified arkorder in the output directory
   milo2lipsync <input.milo_xbox> <output.lipsync>
    - converts an uncompressed milo archive to forge lipsync file
+  csv2txt <input.csv_pc> <output.csv>
+   - decodes a csv file
 ```
 
 ### ForgeToolGUI
