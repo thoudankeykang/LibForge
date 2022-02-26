@@ -36,9 +36,7 @@ namespace LibForge.Util
     {
       file.Position = 0;
       // The initial key is found in the first 4 bytes.
-      int k = file.ReadInt32LE();
-      Console.WriteLine($"key {k}");
-      this.key = cryptRound(k);
+      this.key = cryptRound(file.ReadInt32LE());
       this.position = 0;
       this.keypos = 0;
       this.curKey = this.key;
