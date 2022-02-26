@@ -35,7 +35,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="DtxCS">
-      <HintPath>..\..\Dependencies\DtxCS.dll</HintPath>
+      <HintPath>..\..\Dependencies\DtxCS\Library\bin\Debug\DtxCS.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="MidiCS">
       <HintPath>..\..\Dependencies\MidiCS.dll</HintPath>

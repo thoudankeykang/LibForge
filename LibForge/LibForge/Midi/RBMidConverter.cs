@@ -213,8 +213,8 @@ namespace LibForge.Midi
           "PART REAL_BASS",
           "PART GUITAR",
           "PART REAL_GUITAR",
-          // TODO: Allow these in release builds when shit's no longer borked
-#if DEBUG
+          // TODO: Allow these when shit's no longer borked
+#if false
           "PART KEYS",
           "PART REAL_KEYS_X",
           "PART REAL_KEYS_H",
