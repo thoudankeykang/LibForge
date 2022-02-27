@@ -328,11 +328,11 @@ namespace ForgeTool
           var rbvrPath = args[2];
           var conFile = STFSPackage.OpenFile(Util.LocalFile(conPath));
           var tempDir = Path.Combine(Path.GetTempPath(), "forgetool_tmp_build");
-          Directory.CreateDirectory(tempDir);
           var songs = PkgCreator.ConvertDLCPackage(conFile.RootDirectory.GetDirectory("songs"));
           var entitlementNames = new List<string>();
           foreach(DLCSong song in songs)
           {
+            Directory.CreateDirectory(tempDir);
             var shortname = song.SongData.Shortname;
             var filePrefix = $"pc/songs_download/{shortname}/{shortname}";
             var arks = new List<List<Tuple<string, IFile, int>>>();
