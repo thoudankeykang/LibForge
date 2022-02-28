@@ -1,3 +1,7 @@
+# 20220228
+
+* (hopefully) fix converting pack CONs to RBVR with ForgeTool (@InvoxiPlayGames)
+
 # 20220225
 
 Rock Band VR support by InvoxiPlayGames.
