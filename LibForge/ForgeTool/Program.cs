@@ -393,9 +393,6 @@ namespace ForgeTool
                 builder.Save(rbvrPath, 0x0);
                 entitlementNames.Add($"song_{shortname}");
                 Directory.Delete(tempDir, true);
-                Console.WriteLine("Conversion complete! Add the following DLC SKUs to your entitlement list:");
-                foreach (string sku in entitlementNames)
-                  Console.WriteLine(sku);
               }
               else
               {
@@ -434,9 +431,17 @@ namespace ForgeTool
                   using (var artFile = File.OpenWrite(Path.Combine(songPath, $"{shortname}.png_pc")))
                     TextureWriter.WriteStream(song.Artwork, artFile);
                 }
-                Console.WriteLine("Conversion complete! Add the songs folder to your main RBVR ark using patchcreator in arkhelper");
-
               }
+            }
+            if (makeark)
+            {
+              Console.WriteLine("Conversion complete! Add the following DLC SKUs to your entitlement list:");
+              foreach (string sku in entitlementNames)
+                Console.WriteLine(sku);
+            }
+            else
+            {
+              Console.WriteLine("Conversion complete! Add the songs folder to your main RBVR ark using patchcreator in arkhelper");
             }
           }
           break;
