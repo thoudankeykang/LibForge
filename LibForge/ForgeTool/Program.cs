@@ -391,7 +391,7 @@ namespace ForgeTool
                 var builder = new ArkBuilder($"{shortname}_pc", arks);
                 Console.WriteLine($"Writing {shortname}_pc.hdr and ARK files to {rbvrPath}...");
                 builder.Save(rbvrPath, 0x0);
-                entitlementNames.Add($"song_{shortname}");
+                entitlementNames.Add($"DLC = song_{shortname}");
                 Directory.Delete(tempDir, true);
               }
               else
