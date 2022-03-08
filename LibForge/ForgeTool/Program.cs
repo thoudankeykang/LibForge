@@ -342,7 +342,7 @@ namespace ForgeTool
             var rbvrPath = args[i++];
             var conFile = STFSPackage.OpenFile(Util.LocalFile(conPath));
             var tempDir = Path.Combine(Path.GetTempPath(), "forgetool_tmp_build");
-            var songs = PkgCreator.ConvertDLCPackage(conFile.RootDirectory.GetDirectory("songs"));
+            var songs = PkgCreator.ConvertDLCPackage(conFile.RootDirectory.GetDirectory("songs"), false);
             var entitlementNames = new List<string>();
             foreach (DLCSong song in songs)
             {
