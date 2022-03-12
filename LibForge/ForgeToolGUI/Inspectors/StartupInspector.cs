@@ -118,9 +118,9 @@ namespace ForgeToolGUI.Inspectors
           foreach (string sku in entitlementNames)
           {
             File.WriteAllLines(rbvrPath + "/SKUs.txt", entitlementNames);
-            MessageBox.Show("Conversion Complete! Add the DLC SKUs in SKUs.txt to GammonConfig.ini");
             Console.WriteLine(sku);
           }
+          MessageBox.Show("Conversion Complete! Add the DLC SKUs in SKUs.txt to GammonConfig.ini");
         }
         }
     }
@@ -174,8 +174,8 @@ namespace ForgeToolGUI.Inspectors
               using (var artFile = File.OpenWrite(Path.Combine(songPath, $"{shortname}.png_pc")))
                 TextureWriter.WriteStream(song.Artwork, artFile);
             }
-            MessageBox.Show("Conversion complete! Add the songs folder to your main RBVR ark using patchcreator in arkhelper");
           }
+          MessageBox.Show("Conversion complete! Add the songs folder to your main RBVR ark using patchcreator in arkhelper");
         }
       }
     }
