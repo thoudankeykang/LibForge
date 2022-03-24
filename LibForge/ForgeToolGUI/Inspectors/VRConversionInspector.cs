@@ -9,6 +9,15 @@ using System.Windows.Forms;
 using GameArchives.STFS;
 using LibForge.Util;
 using System.Text.RegularExpressions;
+using System.IO;
+using DtxCS;
+using GameArchives;
+using LibForge;
+using LibForge.Ark;
+using LibForge.Midi;
+using LibForge.RBSong;
+using LibForge.SongData;
+using LibForge.Texture;
 
 namespace ForgeToolGUI.Inspectors
 {
@@ -31,15 +40,12 @@ namespace ForgeToolGUI.Inspectors
       {
         groupBox2.Enabled = false;
         groupBox3.Enabled = false;
-        idBox.Text = "";
-        descriptionBox.Text = "";
+        prefixBox.Text = "";
         return;
       }
       var dtaList = dtas.Values.SelectMany(x => x).ToList();
       dtaList.Sort((a, b) => a.Shortname.CompareTo(b.Shortname));
       groupBox2.Enabled = true;
-      idBox.Text = PkgCreator.GenId(dtaList);
-      descriptionBox.Text = PkgCreator.GenDesc(dtaList);
     }
 
     private void pickFileButton_Click(object sender, EventArgs e)
@@ -104,27 +110,122 @@ namespace ForgeToolGUI.Inspectors
 
     private void buildButton_Click(object sender, EventArgs e)
     {
-      using (var sfd = new SaveFileDialog() { FileName = contentIdTextBox.Text + ".pkg" })
+      Action<string> log = x => logBox.AppendText(x + Environment.NewLine);
+
+      var prefix = prefixBox.Text;
+      var rbvrPath = folderName.Text;
+      var tempDir = Path.Combine(Path.GetTempPath(), "forgetool_tmp_build");
+      if (!rawCheckBox.Checked)
       {
-        if (sfd.ShowDialog() == DialogResult.OK)
+        log("converting CONs to ARKs...");
+        var cons = listBox1.Items.OfType<string>().Select(f => STFSPackage.OpenFile(GameArchives.Util.LocalFile(f))).ToList();
+        foreach (var conFile in cons)
         {
-          Action<string> log = x => logBox.AppendText(x + Environment.NewLine);
-          log("Converting DLC files...");
-          var cons = listBox1.Items.OfType<string>().Select(f => STFSPackage.OpenFile(GameArchives.Util.LocalFile(f))).ToList();
-          var songs = new List<LibForge.DLCSong>();
-          foreach (var con in cons)
+          var songs = PkgCreator.ConvertDLCPackage(conFile.RootDirectory.GetDirectory("songs"), false);
+          var entitlementNames = new List<string>();
+          foreach (DLCSong song in songs)
           {
-            songs.AddRange(PkgCreator.ConvertDLCPackage(
-               con.RootDirectory.GetDirectory("songs"),
-               volumeAdjustCheckBox.Checked,
-               s => log($"Warning ({con.FileName}): " + s)));
+            var shortname = prefix + song.SongData.Shortname;
+            Directory.CreateDirectory(tempDir);
+            var filePrefix = $"pc/songs_download/{shortname}/{shortname}";
+            var arks = new List<List<Tuple<string, IFile, int>>>();
+            arks.Add(new List<Tuple<string, IFile, int>>());
+
+            // convert mogg.dta to dta_pc
+            using (FileStream fs = File.OpenWrite(Path.Combine(tempDir, $"{shortname}.mogg.dta_dta_pc")))
+              DTX.ToDtb(song.MoggDta, fs, 3, false);
+            arks[0].Add(Tuple.Create($"{filePrefix}.mogg.dta_dta_pc", Util.LocalFile($"{tempDir}/{shortname}.mogg.dta_dta_pc"), -1));
+            // convert moggsong to dta_pc
+            using (FileStream fs = File.OpenWrite(Path.Combine(tempDir, $"{shortname}.moggsong_dta_pc")))
+              DTX.ToDtb(song.MoggSong, fs, 3, false);
+            arks[0].Add(Tuple.Create($"{filePrefix}.moggsong_dta_pc", Util.LocalFile($"{tempDir}/{shortname}.moggsong_dta_pc"), -1));
+            // add empty vrevents to rbmid
+            song.RBMidi.Format = RBMid.FORMAT_RBVR;
+            song.RBMidi.VREvents = new RBMid.RBVREVENTS();
+            using (var rbmid = File.OpenWrite(Path.Combine(tempDir, $"{shortname}.rbmid_pc")))
+              RBMidWriter.WriteStream(song.RBMidi, rbmid);
+            arks[0].Add(Tuple.Create($"{filePrefix}.rbmid_pc", Util.LocalFile($"{tempDir}/{shortname}.rbmid_pc"), -1));
+            // add rbsong
+            using (var rbsongFile = File.OpenWrite(Path.Combine(tempDir, $"{shortname}.rbsong")))
+              new RBSongResourceWriter(rbsongFile).WriteStream(song.RBSong);
+            arks[0].Add(Tuple.Create($"{filePrefix}.rbsong", Util.LocalFile($"{tempDir}/{shortname}.rbsong"), -1));
+            // add songdta
+            song.SongData.KeysRank = 0;
+            song.SongData.RealKeysRank = 0;
+            using (var songdtaFile = File.OpenWrite(Path.Combine(tempDir, $"{shortname}.songdta_pc")))
+              SongDataWriter.WriteStream(song.SongData, songdtaFile);
+            arks[0].Add(Tuple.Create($"{filePrefix}.songdta_pc", Util.LocalFile($"{tempDir}/{shortname}.songdta_pc"), -1));
+            // add album art (incompatible)
+            if (song.SongData.AlbumArt)
+            {
+              using (var artFile = File.OpenWrite(Path.Combine(tempDir, $"{shortname}.png_pc")))
+                TextureWriter.WriteStream(song.Artwork, artFile);
+              arks[0].Add(Tuple.Create($"{filePrefix}.png_pc", Util.LocalFile($"{tempDir}/{shortname}.png_pc"), -1));
+            }
+            // add mogg
+            arks[0].Add(Tuple.Create($"{filePrefix}.mogg", song.Mogg, -1));
+
+            var builder = new ArkBuilder($"{shortname}_pc", arks);
+            log($"Writing {shortname}_pc.hdr and ARK files to {rbvrPath}...");
+            builder.Save(rbvrPath, 0x0);
+            entitlementNames.Add($"DLC = song_{shortname}");
+            Directory.Delete(tempDir, true);
+            conFile.Dispose();
           }
-          log("Building PKG...");
-          PkgCreator.BuildPkg(songs, contentIdTextBox.Text, descriptionBox.Text, euCheckBox.Checked, sfd.FileName, log);
-          foreach(var con in cons)
+            log("Conversion complete! Add the following DLC SKUs to your entitlement list:");
+            foreach (string sku in entitlementNames)
+              log(sku);
+          
+        }
+      }
+      else
+      {
+        log("converting CONs to rawfiles...");
+        var cons = listBox1.Items.OfType<string>().Select(f => STFSPackage.OpenFile(GameArchives.Util.LocalFile(f))).ToList();
+        foreach (var conFile in cons)
+        {
+          var songs = PkgCreator.ConvertDLCPackage(conFile.RootDirectory.GetDirectory("songs"), false);
+          foreach (DLCSong song in songs)
           {
-            con.Dispose();
+            var shortname = prefix + song.SongData.Shortname;
+            log($"Writing songs\\pc\\songs\\{shortname} folder to {rbvrPath}...");
+
+            var songPath = Path.Combine(rbvrPath, "songs", "pc", "songs", shortname);
+            Directory.CreateDirectory(songPath);
+            // add mogg
+            using (var mogg = File.OpenWrite(Path.Combine(songPath, $"{shortname}.mogg")))
+            using (var conMogg = song.Mogg.GetStream())
+            {
+              conMogg.CopyTo(mogg);
+            }
+            // convert mogg.dta to dta_pc
+            using (FileStream fs = File.OpenWrite(Path.Combine(songPath, $"{shortname}.mogg.dta_dta_pc")))
+              DTX.ToDtb(song.MoggDta, fs, 3, false);
+            // convert moggsong to dta_pc
+            using (FileStream fs = File.OpenWrite(Path.Combine(songPath, $"{shortname}.moggsong_dta_pc")))
+              DTX.ToDtb(song.MoggSong, fs, 3, false);
+            // add empty vrevents to rbmid
+            song.RBMidi.Format = RBMid.FORMAT_RBVR;
+            song.RBMidi.VREvents = new RBMid.RBVREVENTS();
+            using (var rbmid = File.OpenWrite(Path.Combine(songPath, $"{shortname}.rbmid_pc")))
+              RBMidWriter.WriteStream(song.RBMidi, rbmid);
+            // add rbsong
+            using (var rbsongFile = File.OpenWrite(Path.Combine(songPath, $"{shortname}.rbsong")))
+              new RBSongResourceWriter(rbsongFile).WriteStream(song.RBSong);
+            // add songdta
+            song.SongData.KeysRank = 0;
+            song.SongData.RealKeysRank = 0;
+            using (var songdtaFile = File.OpenWrite(Path.Combine(songPath, $"{shortname}.songdta_pc")))
+              SongDataWriter.WriteStream(song.SongData, songdtaFile);
+            // add album art
+            if (song.SongData.AlbumArt)
+            {
+              using (var artFile = File.OpenWrite(Path.Combine(songPath, $"{shortname}.png_pc")))
+                TextureWriter.WriteStream(song.Artwork, artFile);
+            }
+            conFile.Dispose();
           }
+          log("Conversion complete! Add the songs folder to your main RBVR ark using patchcreator in arkhelper");
         }
       }
     }
@@ -153,6 +254,18 @@ namespace ForgeToolGUI.Inspectors
       {
         RemoveCon(listBox1.SelectedItem as string);
         UpdateState();
+      }
+    }
+
+    private void Outputbtn_Click(object sender, EventArgs e)
+    {
+      using (var sfd = new FolderBrowserDialog())
+      {
+        if (sfd.ShowDialog() == DialogResult.OK)
+        {
+          folderName.Text = sfd.SelectedPath;
+          groupBox3.Enabled = true;
+        }
       }
     }
   }

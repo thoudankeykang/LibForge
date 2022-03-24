@@ -127,57 +127,7 @@ namespace ForgeToolGUI.Inspectors
 
     private void button2_Click(object sender, EventArgs e)
     {
-      var ocd = new OpenFileDialog();
-      if (ocd.ShowDialog(this) == DialogResult.OK)
-      {
-        FolderBrowserDialog opd = new FolderBrowserDialog();
-        if (opd.ShowDialog(this) == DialogResult.OK)
-        {
-          var rbvrPath = opd.SelectedPath;
-          var conFile = STFSPackage.OpenFile(Util.LocalFile(ocd.FileName));
-          var tempDir = Path.Combine(Path.GetTempPath(), "forgetool_tmp_build");
-          var songs = PkgCreator.ConvertDLCPackage(conFile.RootDirectory.GetDirectory("songs"), false);
-          var entitlementNames = new List<string>();
-          foreach (DLCSong song in songs)
-          {
-            var shortname = song.SongData.Shortname;
-            var songPath = Path.Combine(rbvrPath, "songs", "pc", "songs", shortname);
-            Directory.CreateDirectory(songPath);
-            // add mogg
-            using (var mogg = File.OpenWrite(Path.Combine(songPath, $"{shortname}.mogg")))
-            using (var conMogg = song.Mogg.GetStream())
-            {
-              conMogg.CopyTo(mogg);
-            }
-            // convert mogg.dta to dta_pc
-            using (FileStream fs = File.OpenWrite(Path.Combine(songPath, $"{shortname}.mogg.dta_dta_pc")))
-              DTX.ToDtb(song.MoggDta, fs, 3, false);
-            // convert moggsong to dta_pc
-            using (FileStream fs = File.OpenWrite(Path.Combine(songPath, $"{shortname}.moggsong_dta_pc")))
-              DTX.ToDtb(song.MoggSong, fs, 3, false);
-            // add empty vrevents to rbmid
-            song.RBMidi.Format = RBMid.FORMAT_RBVR;
-            song.RBMidi.VREvents = new RBMid.RBVREVENTS();
-            using (var rbmid = File.OpenWrite(Path.Combine(songPath, $"{shortname}.rbmid_pc")))
-              RBMidWriter.WriteStream(song.RBMidi, rbmid);
-            // add rbsong
-            using (var rbsongFile = File.OpenWrite(Path.Combine(songPath, $"{shortname}.rbsong")))
-              new RBSongResourceWriter(rbsongFile).WriteStream(song.RBSong);
-            // add songdta
-            song.SongData.KeysRank = 0;
-            song.SongData.RealKeysRank = 0;
-            using (var songdtaFile = File.OpenWrite(Path.Combine(songPath, $"{shortname}.songdta_pc")))
-              SongDataWriter.WriteStream(song.SongData, songdtaFile);
-            // add album art
-            if (song.SongData.AlbumArt)
-            {
-              using (var artFile = File.OpenWrite(Path.Combine(songPath, $"{shortname}.png_pc")))
-                TextureWriter.WriteStream(song.Artwork, artFile);
-            }
-          }
-          MessageBox.Show("Conversion complete! Add the songs folder to your main RBVR ark using patchcreator in arkhelper");
-        }
-      }
+      fb.VRConverter();
     }
   }
 }

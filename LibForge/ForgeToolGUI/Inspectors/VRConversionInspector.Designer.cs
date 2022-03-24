@@ -33,11 +33,14 @@
             this.clearButton = new System.Windows.Forms.Button();
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.Outputbtn = new System.Windows.Forms.Button();
             this.volumeAdjustCheckBox = new System.Windows.Forms.CheckBox();
-            this.euCheckBox = new System.Windows.Forms.CheckBox();
+            this.rawCheckBox = new System.Windows.Forms.CheckBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.idBox = new System.Windows.Forms.TextBox();
+            this.prefixBox = new System.Windows.Forms.TextBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.folderName = new System.Windows.Forms.Label();
+            this.Outputtxt = new System.Windows.Forms.Label();
             this.buildButton = new System.Windows.Forms.Button();
             this.contentIdTextBox = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
@@ -99,40 +102,49 @@
             // 
             this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox2.Controls.Add(this.Outputbtn);
             this.groupBox2.Controls.Add(this.volumeAdjustCheckBox);
-            this.groupBox2.Controls.Add(this.euCheckBox);
+            this.groupBox2.Controls.Add(this.rawCheckBox);
             this.groupBox2.Controls.Add(this.label2);
-            this.groupBox2.Controls.Add(this.idBox);
+            this.groupBox2.Controls.Add(this.prefixBox);
             this.groupBox2.Enabled = false;
             this.groupBox2.Location = new System.Drawing.Point(4, 214);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(473, 112);
+            this.groupBox2.Size = new System.Drawing.Size(473, 74);
             this.groupBox2.TabIndex = 2;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Step 2: Choose Options";
             // 
+            // Outputbtn
+            // 
+            this.Outputbtn.Location = new System.Drawing.Point(12, 41);
+            this.Outputbtn.Name = "Outputbtn";
+            this.Outputbtn.Size = new System.Drawing.Size(107, 23);
+            this.Outputbtn.TabIndex = 3;
+            this.Outputbtn.Text = "Pick Output Folder";
+            this.Outputbtn.UseVisualStyleBackColor = true;
+            this.Outputbtn.Click += new System.EventHandler(this.Outputbtn_Click);
+            // 
             // volumeAdjustCheckBox
             // 
             this.volumeAdjustCheckBox.AutoSize = true;
-            this.volumeAdjustCheckBox.Checked = true;
-            this.volumeAdjustCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.volumeAdjustCheckBox.Location = new System.Drawing.Point(329, 89);
+            this.volumeAdjustCheckBox.Location = new System.Drawing.Point(329, 45);
             this.volumeAdjustCheckBox.Name = "volumeAdjustCheckBox";
-            this.volumeAdjustCheckBox.Size = new System.Drawing.Size(138, 17);
+            this.volumeAdjustCheckBox.Size = new System.Drawing.Size(143, 17);
             this.volumeAdjustCheckBox.TabIndex = 6;
-            this.volumeAdjustCheckBox.Text = "Adjust audio mix (-3db)?";
+            this.volumeAdjustCheckBox.Text = "Awesomeness Detection";
             this.volumeAdjustCheckBox.UseVisualStyleBackColor = true;
             // 
-            // euCheckBox
+            // rawCheckBox
             // 
-            this.euCheckBox.AutoSize = true;
-            this.euCheckBox.Location = new System.Drawing.Point(222, 89);
-            this.euCheckBox.Name = "euCheckBox";
-            this.euCheckBox.Size = new System.Drawing.Size(93, 17);
-            this.euCheckBox.TabIndex = 5;
-            this.euCheckBox.Text = "Build rawfiles?";
-            this.euCheckBox.UseVisualStyleBackColor = true;
-            this.euCheckBox.CheckedChanged += new System.EventHandler(this.euCheckBox_CheckedChanged);
+            this.rawCheckBox.AutoSize = true;
+            this.rawCheckBox.Location = new System.Drawing.Point(230, 45);
+            this.rawCheckBox.Name = "rawCheckBox";
+            this.rawCheckBox.Size = new System.Drawing.Size(93, 17);
+            this.rawCheckBox.TabIndex = 5;
+            this.rawCheckBox.Text = "Build rawfiles?";
+            this.rawCheckBox.UseVisualStyleBackColor = true;
+            this.rawCheckBox.CheckedChanged += new System.EventHandler(this.euCheckBox_CheckedChanged);
             // 
             // label2
             // 
@@ -143,27 +155,46 @@
             this.label2.TabIndex = 3;
             this.label2.Text = "Prefix:";
             // 
-            // idBox
+            // prefixBox
             // 
-            this.idBox.Location = new System.Drawing.Point(51, 19);
-            this.idBox.Name = "idBox";
-            this.idBox.Size = new System.Drawing.Size(416, 20);
-            this.idBox.TabIndex = 0;
-            this.idBox.TextChanged += new System.EventHandler(this.idBox_TextChanged);
+            this.prefixBox.Location = new System.Drawing.Point(51, 19);
+            this.prefixBox.Name = "prefixBox";
+            this.prefixBox.Size = new System.Drawing.Size(416, 20);
+            this.prefixBox.TabIndex = 0;
+            this.prefixBox.TextChanged += new System.EventHandler(this.idBox_TextChanged);
             // 
             // groupBox3
             // 
             this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox3.Controls.Add(this.folderName);
+            this.groupBox3.Controls.Add(this.Outputtxt);
             this.groupBox3.Controls.Add(this.buildButton);
             this.groupBox3.Controls.Add(this.contentIdTextBox);
             this.groupBox3.Enabled = false;
-            this.groupBox3.Location = new System.Drawing.Point(4, 332);
+            this.groupBox3.Location = new System.Drawing.Point(4, 294);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(473, 40);
             this.groupBox3.TabIndex = 3;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Step 3: Build Files";
+            // 
+            // folderName
+            // 
+            this.folderName.AutoSize = true;
+            this.folderName.Location = new System.Drawing.Point(83, 21);
+            this.folderName.Name = "folderName";
+            this.folderName.Size = new System.Drawing.Size(0, 13);
+            this.folderName.TabIndex = 8;
+            // 
+            // Outputtxt
+            // 
+            this.Outputtxt.AutoSize = true;
+            this.Outputtxt.Location = new System.Drawing.Point(9, 21);
+            this.Outputtxt.Name = "Outputtxt";
+            this.Outputtxt.Size = new System.Drawing.Size(74, 13);
+            this.Outputtxt.TabIndex = 7;
+            this.Outputtxt.Text = "Output Folder:";
             // 
             // buildButton
             // 
@@ -187,7 +218,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(3, 375);
+            this.label5.Location = new System.Drawing.Point(3, 337);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(28, 13);
             this.label5.TabIndex = 6;
@@ -198,12 +229,12 @@
             this.logBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.logBox.Location = new System.Drawing.Point(3, 391);
+            this.logBox.Location = new System.Drawing.Point(3, 353);
             this.logBox.Multiline = true;
             this.logBox.Name = "logBox";
             this.logBox.ReadOnly = true;
             this.logBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.logBox.Size = new System.Drawing.Size(474, 44);
+            this.logBox.Size = new System.Drawing.Size(474, 82);
             this.logBox.TabIndex = 5;
             // 
             // VRConversionInspector
@@ -234,9 +265,9 @@
     private System.Windows.Forms.GroupBox groupBox1;
     private System.Windows.Forms.GroupBox groupBox2;
     private System.Windows.Forms.GroupBox groupBox3;
-    private System.Windows.Forms.TextBox idBox;
+    private System.Windows.Forms.TextBox prefixBox;
     private System.Windows.Forms.Label label2;
-    private System.Windows.Forms.CheckBox euCheckBox;
+    private System.Windows.Forms.CheckBox rawCheckBox;
     private System.Windows.Forms.Label contentIdTextBox;
     private System.Windows.Forms.CheckBox volumeAdjustCheckBox;
     private System.Windows.Forms.ListBox listBox1;
@@ -244,5 +275,8 @@
     private System.Windows.Forms.TextBox logBox;
     private System.Windows.Forms.Button clearButton;
     private System.Windows.Forms.Button buildButton;
+    private System.Windows.Forms.Button Outputbtn;
+    private System.Windows.Forms.Label Outputtxt;
+    private System.Windows.Forms.Label folderName;
   }
 }

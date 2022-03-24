@@ -36,7 +36,6 @@ namespace ForgeToolGUI.Inspectors
             this.openPackageButton = new System.Windows.Forms.Button();
             this.openFolderButton = new System.Windows.Forms.Button();
             this.openFileButton = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -45,7 +44,7 @@ namespace ForgeToolGUI.Inspectors
             this.convertButton.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.convertButton.Location = new System.Drawing.Point(321, 3);
+            this.convertButton.Location = new System.Drawing.Point(3, 117);
             this.convertButton.Name = "convertButton";
             this.convertButton.Size = new System.Drawing.Size(312, 108);
             this.convertButton.TabIndex = 0;
@@ -76,8 +75,7 @@ namespace ForgeToolGUI.Inspectors
             this.tableLayoutPanel1.Controls.Add(this.openPackageButton, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.openFolderButton, 1, 2);
             this.tableLayoutPanel1.Controls.Add(this.openFileButton, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.button1, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.convertButton, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.convertButton, 0, 1);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 45);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 3;
@@ -97,7 +95,7 @@ namespace ForgeToolGUI.Inspectors
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(312, 108);
             this.button2.TabIndex = 5;
-            this.button2.Text = "Convert RB3 Customs to RBVR (Rawfiles)";
+            this.button2.Text = "Convert RB3 Customs to RBVR";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
@@ -140,19 +138,6 @@ namespace ForgeToolGUI.Inspectors
             this.openFileButton.UseVisualStyleBackColor = true;
             this.openFileButton.Click += new System.EventHandler(this.openFileButton_Click);
             // 
-            // button1
-            // 
-            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.Location = new System.Drawing.Point(3, 117);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(312, 108);
-            this.button1.TabIndex = 4;
-            this.button1.Text = "Convert RB3 Customs to RBVR (ARK)";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click_1);
-            // 
             // StartupInspector
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -174,7 +159,6 @@ namespace ForgeToolGUI.Inspectors
     private System.Windows.Forms.Button openFileButton;
     private System.Windows.Forms.Button openPackageButton;
     private System.Windows.Forms.Button openFolderButton;
-    private System.Windows.Forms.Button button1;
     private System.Windows.Forms.Button button2;
   }
 }
