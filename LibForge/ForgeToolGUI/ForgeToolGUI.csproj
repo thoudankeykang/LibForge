@@ -70,6 +70,12 @@
     <Compile Include="ForgeBrowser.Designer.cs">
       <DependentUpon>ForgeBrowser.cs</DependentUpon>
     </Compile>
+    <Compile Include="Inspectors\VRConversionInspector.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Inspectors\VRConversionInspector.Designer.cs">
+      <DependentUpon>VRConversionInspector.cs</DependentUpon>
+    </Compile>
     <Compile Include="Inspectors\ConversionInspector.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -138,6 +144,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ForgeBrowser.resx">
       <DependentUpon>ForgeBrowser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Inspectors\VRConversionInspector.resx">
+      <DependentUpon>VRConversionInspector.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Inspectors\ConversionInspector.resx">
       <DependentUpon>ConversionInspector.cs</DependentUpon>
