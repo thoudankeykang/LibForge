@@ -1,6 +1,6 @@
 This is a fork of LibForge/ForgeTool by Maxton, with continuing work to fix bugs and add features.
 
-Download from the [releases page](https://github.com/mtolly/LibForge/releases) or Lysix's latest build from [Appveyor](https://ci.appveyor.com/project/LlysiX/libforge/build/artifacts)
+Download the latest build from [Appveyor](https://ci.appveyor.com/project/LlysiX/libforge/build/artifacts) or from the [releases page](https://github.com/mtolly/LibForge/releases) if the artifacts have expired
 
 # Original readme follows
 
@@ -49,9 +49,10 @@ Verbs:
        --scee : make an EU package
        --id <16CHARIDENTIFIER> : set the customizable part of the Package ID/Filename
        --desc "Package Description" : set the description of the package
-  con2rbvr [--noark] <input_con> <output_dir>
+  con2rbvr [--noark] [--prefix PREFIX] <input_con> <output_dir>
    - converts a CON custom to a RBVR custom in the given game directory
        --noark : creates a songs folder to be used with patchcreator in arkhelper instead of a DLC ARK
+       --prefix <PREFIX> : set a custom prefix to better organize your converted song files
   arkorder <input_hdr> <output_dta>
    - outputs the arkorder DTA of a given ARK HDR file
   arkbuild <input_dir> <input_arkorder> <output_dir> <ark_name>
