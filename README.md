@@ -52,7 +52,7 @@ Verbs:
   con2rbvr [--noark] [--prefix PREFIX] <input_con> <output_dir>
    - converts a CON custom to a RBVR custom in the given game directory
        --noark : creates a songs folder to be used with patchcreator in arkhelper instead of a DLC ARK
-       --prefix <PREFIX> : set a custom prefix to better organize your converted song files
+       --prefix <PREFIX> : sets a custom prefix to better organize your converted song files
   arkorder <input_hdr> <output_dta>
    - outputs the arkorder DTA of a given ARK HDR file
   arkbuild <input_dir> <input_arkorder> <output_dir> <ark_name>
