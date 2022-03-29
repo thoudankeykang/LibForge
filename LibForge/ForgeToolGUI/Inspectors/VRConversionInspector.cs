@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Data;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using GameArchives.STFS;
 using LibForge.Util;
@@ -174,7 +175,11 @@ namespace ForgeToolGUI.Inspectors
           }
             log("Conversion complete! Add the following DLC SKUs to your entitlement list:");
             foreach (string sku in entitlementNames)
+            {
               log(sku);
+              File.WriteAllLines(rbvrPath + "/SKUs.txt", entitlementNames);
+            }
+            log($"You can also find the SKUs in {rbvrPath}\\SKUs.txt");
           
         }
       }

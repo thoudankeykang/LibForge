@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
+using System.Threading.Tasks;
 using DtxCS;
 using DtxCS.DataTypes;
 using GameArchives;
@@ -337,7 +338,7 @@ namespace ForgeTool
                   makeark = false;
                   continue;
                 case "--prefix":
-                  prefix = args[++i] + "_";
+                  prefix = args[++i];
                   continue;
               }
               break;
@@ -443,7 +444,11 @@ namespace ForgeTool
             {
               Console.WriteLine("Conversion complete! Add the following DLC SKUs to your entitlement list:");
               foreach (string sku in entitlementNames)
+              {
                 Console.WriteLine(sku);
+                File.WriteAllLines(rbvrPath + "/SKUs.txt", entitlementNames);
+              }
+              Console.WriteLine($"You can also find the SKUs in {rbvrPath}\\SKUs.txt");
             }
             else
             {
@@ -567,10 +572,10 @@ namespace ForgeTool
       Console.WriteLine("       --scee : make an EU package");
       Console.WriteLine("       --id <16CHARIDENTIFIER> : set the customizable part of the Package ID/Filename");
       Console.WriteLine("       --desc \"Package Description\" : set the description of the package");
-      Console.WriteLine("  con2rbvr [--noark] [--prefix] <input_con> <output_dir>");
+      Console.WriteLine("  con2rbvr [--noark] [--prefix PREFIX] <input_con> <output_dir>");
       Console.WriteLine("   - converts a CON custom to a RBVR custom in the given game directory");
       Console.WriteLine("       --noark : creates a songs folder to be used with patchcreator in arkhelper instead of a DLC ARK");
-      Console.WriteLine("       --prefix \"folder/ark prefix\" : Adds a prefix to the ARK/song folder name, e.g. prefix_songname.ark");
+      Console.WriteLine("       --prefix <PREFIX> : sets a custom prefix to better organize your converted song files");
       Console.WriteLine("  arkorder <input_hdr> <output_dta>");
       Console.WriteLine("   - outputs the arkorder DTA of a given ARK HDR file");
       Console.WriteLine("  arkbuild <input_dir> <input_arkorder> <output_dir> <ark_name>");
