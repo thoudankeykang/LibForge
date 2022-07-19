@@ -264,6 +264,10 @@ namespace ForgeToolGUI
     {
       OpenTab(new Inspectors.VRConversionInspector(), "Con to VR Conversion");
     }
+    public void RBVRELauncher()
+    {
+      OpenTab(new Inspectors.RBVRELauncherInspector(), "RBVREnhanced Launcher");
+    }
     private void convertCONToPKGToolStripMenuItem_Click(object sender, EventArgs e)
     {
       OpenConverter();

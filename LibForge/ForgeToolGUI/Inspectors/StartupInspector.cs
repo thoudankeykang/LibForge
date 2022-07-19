@@ -53,13 +53,14 @@ namespace ForgeToolGUI.Inspectors
       fb.openFolder_Click(sender, e);
     }
 
-    private void button1_Click_1(object sender, EventArgs e)
-    {
-    }
-
     private void button2_Click(object sender, EventArgs e)
     {
       fb.VRConverter();
+    }
+
+    private void button1_Click_2(object sender, EventArgs e)
+    {
+      fb.RBVRELauncher();
     }
   }
 }
