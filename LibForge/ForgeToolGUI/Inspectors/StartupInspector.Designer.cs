@@ -36,7 +36,6 @@ namespace ForgeToolGUI.Inspectors
             this.openPackageButton = new System.Windows.Forms.Button();
             this.openFolderButton = new System.Windows.Forms.Button();
             this.openFileButton = new System.Windows.Forms.Button();
-            this.RBVRELauncher = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -72,7 +71,6 @@ namespace ForgeToolGUI.Inspectors
             this.tableLayoutPanel1.ColumnCount = 2;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Controls.Add(this.RBVRELauncher, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.button2, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.openPackageButton, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.openFolderButton, 1, 2);
@@ -140,20 +138,6 @@ namespace ForgeToolGUI.Inspectors
             this.openFileButton.UseVisualStyleBackColor = true;
             this.openFileButton.Click += new System.EventHandler(this.openFileButton_Click);
             // 
-            // RBVRELauncher
-            // 
-            this.RBVRELauncher.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.RBVRELauncher.Cursor = System.Windows.Forms.Cursors.Default;
-            this.RBVRELauncher.Location = new System.Drawing.Point(321, 3);
-            this.RBVRELauncher.Name = "RBVRELauncher";
-            this.RBVRELauncher.Size = new System.Drawing.Size(312, 108);
-            this.RBVRELauncher.TabIndex = 6;
-            this.RBVRELauncher.Text = "Rock Band VR Enhanced Launcher";
-            this.RBVRELauncher.UseVisualStyleBackColor = true;
-            this.RBVRELauncher.Click += new System.EventHandler(this.button1_Click_2);
-            // 
             // StartupInspector
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -176,6 +160,5 @@ namespace ForgeToolGUI.Inspectors
     private System.Windows.Forms.Button openPackageButton;
     private System.Windows.Forms.Button openFolderButton;
     private System.Windows.Forms.Button button2;
-    private System.Windows.Forms.Button RBVRELauncher;
   }
 }
