@@ -106,6 +106,7 @@ namespace ForgeToolGUI.Inspectors
       var rbvrExec = folderName.Text + "/rbvr.exe";
       var rbvrPatchDir = folderName.Text + "/rawfiles";
       Process rbvr = new Process();
+      rbvr.StartInfo.WorkingDirectory = folderName.Text;
       rbvr.StartInfo.FileName = rbvrExec;
       DirectoryInfo rbvrDir = new DirectoryInfo(folderName.Text);
       if (Directory.Exists(rbvrPatchDir))
