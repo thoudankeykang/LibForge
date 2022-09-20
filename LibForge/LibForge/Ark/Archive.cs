@@ -44,7 +44,7 @@ namespace LibForge.Ark
           sw.WriteLine("{split_ark}");
           nextArk++;
         }
-        sw.WriteLine("('{0}' {1})", entry.Path, entry.Flags);
+        sw.WriteLine("(\"{0}\" {1})", entry.Path, entry.Flags);
       }
     }
 
