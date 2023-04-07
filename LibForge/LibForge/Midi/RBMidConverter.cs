@@ -210,17 +210,17 @@ namespace LibForge.Midi
         var trackNames = new[] {
           "PART DRUMS",
           "PART BASS",
-          "PART REAL_BASS",
           "PART GUITAR",
-          "PART REAL_GUITAR",
-          // TODO: Allow these when shit's no longer borked
-#if false
           "PART KEYS",
           "PART REAL_KEYS_X",
           "PART REAL_KEYS_H",
           "PART REAL_KEYS_M",
           "PART REAL_KEYS_E",
-          "PART KEYS_ANIM_RH",
+          "PART KEYS_ANIM_RH",          
+          // TODO: Allow these when shit's no longer borked
+#if false
+          "PART REAL_GUITAR",
+          "PART REAL_BASS",
           "PART KEYS_ANIM_LH",
 #endif
           "PART VOCALS",
